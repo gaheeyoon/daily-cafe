@@ -33,6 +33,20 @@ window.ARCHIVE = {
   /* 결산 — 후원 물품 (금액은 표시하지 않습니다)
      goods: 품목 / qty: 개수 (숫자, 모르면 null) / unit: 단위 (생략하면 "개") / donor: 후원자 (없으면 "") */
   summary: {
+    /* 수입·지출은 항목만 표시합니다. (금액 비공개)
+       나중에 금액을 공개하려면 각 항목에 amount: 숫자 를 추가하면 "0,000원" 으로 표시됩니다. */
+    income: [
+      { label: "물품지원금", detail: "학부모회장협의회, 운영위원장협의회" },
+      { label: "후원금" },
+      { label: "총 수입", total: true }
+    ],
+    expense: [
+      { label: "홍보비, 운영비" },
+      { label: "물품구매비" },
+      { label: "떡, 과일, 부식비" },
+      { label: "소모품 및 잡비" },
+      { label: "총 지출", total: true }
+    ],
     note: "수익금 전액은 태안군청소년 장학기금으로 전달됩니다.",
     sponsors: [
       { goods: "가래떡", qty: 70, donor: "정선교" },

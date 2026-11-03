@@ -150,30 +150,46 @@
     });
   }
 
-  /* ── 결산 (후원 물품: 품목 · 개수 · 후원자) ── */
-  function summary(){
-    var S = D.summary, list = S && S.sponsors;
-    if (!list || !list.length) return empty('결산이 곧 공개됩니다.');
+  /* ── 결산: 수입 · 지출 (항목만) + 후원 물품 (품목 · 개수 · 후원자) ── */
+  function section(title){ var h = el('div','sec-head'); h.appendChild(el('h2',null,title)); root.appendChild(h); }
 
-    var hl = el('div','hl');
-    hl.appendChild(el('div','k','마음을 보태 주신 후원 물품'));
-    hl.appendChild(el('div','v',list.length + '종'));
-    hl.appendChild(el('div','s','따뜻한 마음을 보태 주셔서 감사합니다.'));
-    root.appendChild(hl);
-
-    var h = el('div','sec-head'); h.appendChild(el('h2',null,'마음을 보태 주신 분들')); root.appendChild(h);
-    var ul = el('ul','sponsors');
-    var th = el('li','th'); th.appendChild(el('span','goods','품목')); th.appendChild(el('span','qty','개수')); th.appendChild(el('span','donor','후원'));
-    ul.appendChild(th);
-    list.forEach(function(s){
-      var li = el('li');
-      li.appendChild(el('span','goods',s.goods));
-      li.appendChild(el('span','qty', s.qty != null ? s.qty.toLocaleString('ko-KR') + (s.unit || '개') : ''));
-      li.appendChild(el('span','donor',s.donor || ''));
+  function ledger(rows){
+    var ul = el('ul','ledger');
+    rows.forEach(function(r){
+      var li = el('li', r.total ? 'total' : '');
+      var l = el('span','l'); l.appendChild(document.createTextNode(r.label));
+      if (r.detail) l.appendChild(el('small',null,r.detail));
+      li.appendChild(l);
+      if (r.amount != null) li.appendChild(el('span','a', Number(r.amount).toLocaleString('ko-KR') + '원'));
       ul.appendChild(li);
     });
-    root.appendChild(ul);
-    if (S.note){ var t = el('p','thanks',S.note); root.appendChild(t); }
+    return ul;
+  }
+
+  function summary(){
+    var S = D.summary;
+    if (!S) return empty('결산이 곧 공개됩니다.');
+
+    if (S.income && S.income.length){ section('수입'); root.appendChild(ledger(S.income)); }
+    if (S.expense && S.expense.length){ section('지출'); root.appendChild(ledger(S.expense)); }
+
+    var list = S.sponsors;
+    if (list && list.length){
+      section('마음을 보태 주신 분들');
+      root.appendChild(el('div','count','후원 물품 ' + list.length + '종'));
+      var ul = el('ul','sponsors');
+      var th = el('li','th'); th.appendChild(el('span','goods','품목')); th.appendChild(el('span','qty','개수')); th.appendChild(el('span','donor','후원'));
+      ul.appendChild(th);
+      list.forEach(function(s){
+        var li = el('li');
+        li.appendChild(el('span','goods',s.goods));
+        li.appendChild(el('span','qty', s.qty != null ? s.qty.toLocaleString('ko-KR') + (s.unit || '개') : ''));
+        li.appendChild(el('span','donor',s.donor || ''));
+        ul.appendChild(li);
+      });
+      root.appendChild(ul);
+    }
+    if (S.note) root.appendChild(el('p','thanks',S.note));
   }
 
   ({guestbook:guestbook, photowall:photowall, photos:photos, summary:summary})[page]();
