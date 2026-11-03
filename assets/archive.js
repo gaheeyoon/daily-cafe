@@ -170,8 +170,10 @@
     var S = D.summary;
     if (!S) return empty('결산이 곧 공개됩니다.');
 
-    if (S.income && S.income.length){ section('수입'); root.appendChild(ledger(S.income)); }
-    if (S.expense && S.expense.length){ section('지출'); root.appendChild(ledger(S.expense)); }
+    (S.groups || []).forEach(function(g){
+      if (!g.rows || !g.rows.length) return;
+      section(g.title); root.appendChild(ledger(g.rows));
+    });
 
     var list = S.sponsors;
     if (list && list.length){

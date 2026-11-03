@@ -33,19 +33,32 @@ window.ARCHIVE = {
   /* 결산 — 후원 물품 (금액은 표시하지 않습니다)
      goods: 품목 / qty: 개수 (숫자, 모르면 null) / unit: 단위 (생략하면 "개") / donor: 후원자 (없으면 "") */
   summary: {
-    /* 수입·지출은 항목만 표시합니다. (금액 비공개)
-       나중에 금액을 공개하려면 각 항목에 amount: 숫자 를 추가하면 "0,000원" 으로 표시됩니다. */
-    income: [
-      { label: "물품지원금", detail: "학부모회장협의회, 운영위원장협의회" },
-      { label: "후원금" },
-      { label: "총 수입", total: true }
-    ],
-    expense: [
-      { label: "홍보비, 운영비" },
-      { label: "물품구매비" },
-      { label: "떡, 과일, 부식비" },
-      { label: "소모품 및 잡비" },
-      { label: "총 지출", total: true }
+    /* 결산 항목 (금액 비공개 — 항목만 표시)
+       groups: 묶음별 제목(title)과 항목(rows). total: true 이면 굵은 빨간 글씨로 표시합니다.
+       나중에 금액을 공개하려면 항목에 amount: 숫자 를 추가하면 "0,000원" 으로 표시됩니다. */
+    groups: [
+      { title: "수입", rows: [
+        { label: "물품지원금(운영위원장협의회)" },
+        { label: "물품지원금(학부모회장협의회)" },
+        { label: "총수입(티켓판매, 후원금)" },
+        { label: "총수입", total: true }
+      ]},
+      { title: "지출", rows: [
+        { label: "홍보비" },
+        { label: "운영비" },
+        { label: "물품대금" },
+        { label: "부식비 및 잡비" },
+        { label: "총지출", total: true }
+      ]},
+      { title: "잔액", rows: [
+        { label: "일일찻집총수입" },
+        { label: "일일찻집잔액", total: true }
+      ]},
+      { title: "장학금", rows: [
+        { label: "2026년 졸업생 장학금" },
+        { label: "태안사랑장학회 장학금" },
+        { label: "장학금 지출 후 잔액", total: true }
+      ]}
     ],
     note: "수익금 전액은 태안군청소년 장학기금으로 전달됩니다.",
     sponsors: [
