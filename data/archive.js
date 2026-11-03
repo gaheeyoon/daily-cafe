@@ -13,14 +13,8 @@ window.ARCHIVE = {
 
   /* 방명록: guestbook/ 폴더에 올린 사진이 파일명 순서대로 자동 표시됩니다.
      (GitHub 저장소의 guestbook 폴더에 jpg·png·webp 사진을 올리기만 하면 됩니다.)
-     아래 목록은 GitHub 에서 폴더를 읽어 오지 못할 때(로컬 미리보기 등)만 쓰는 예비용입니다. */
-  guestbook: [
-    { src: "guestbook/01.jpg" },
-    { src: "guestbook/02.jpg" },
-    { src: "guestbook/03.jpg" },
-    { src: "guestbook/04.jpg" },
-    { src: "guestbook/05.jpg" }
-  ],
+     아래 목록은 GitHub 에서 폴더를 읽어 오지 못할 때(로컬 미리보기 등)만 쓰는 예비용이며, 비워 두어도 됩니다. */
+  guestbook: [],
 
   /* 포토월: 포토월 앞에서 찍은 사진 */
   photowall: [
