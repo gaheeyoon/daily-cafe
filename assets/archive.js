@@ -47,20 +47,42 @@
   function close(){ lb.classList.remove('on'); document.body.style.overflow = ''; }
   function go(d){ idx = (idx + d + items.length) % items.length; show(); }
 
-  /* ── 방명록 (오프라인 방명록 사진) ── */
+  /* ── GitHub 폴더의 사진 목록 읽기 (파일명 순) ── */
+  function listFolder(folder, fallback, cb){
+    var G = D.github, key = 'ls:' + folder;
+    function done(list){ cb(list && list.length ? list : (fallback || [])); }
+    if (!G) return done();
+    try { var c = JSON.parse(sessionStorage.getItem(key)); if (c && Date.now() - c.t < 120000) return done(c.l); } catch(e){}
+    var url = 'https://api.github.com/repos/' + G.owner + '/' + G.repo + '/contents/' + folder + '?ref=' + (G.branch || 'main');
+    fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } })
+      .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(files){
+        var list = files.filter(function(f){ return f.type === 'file' && /\.(jpe?g|png|webp|gif)$/i.test(f.name); })
+          .sort(function(a,b){ return a.name.localeCompare(b.name, 'ko', { numeric: true }); })
+          .map(function(f){ return { src: folder + '/' + encodeURIComponent(f.name) }; });
+        try { sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), l: list })); } catch(e){}
+        done(list);
+      })
+      .catch(function(){ done(); });
+  }
+
+  /* ── 방명록 (guestbook/ 폴더의 사진) ── */
   function guestbook(){
-    var list = D.guestbook || [];
-    if (!list.length) return empty('방명록이 곧 공개됩니다.');
-    count(list.length);
-    var g = el('div','book');
-    list.forEach(function(p,i){
-      var b = el('button','page'); b.type = 'button'; b.setAttribute('aria-label','방명록 ' + (i+1) + '쪽 크게 보기');
-      var im = el('img'); im.src = p.thumb || p.src; im.alt = p.caption || ('방명록 ' + (i+1)); im.loading = 'lazy';
-      b.appendChild(im); b.appendChild(el('span',null,(i+1) + ''));
-      b.onclick = function(){ open(list, i); };
-      g.appendChild(b);
+    var msg = el('div','empty','불러오는 중…'); root.appendChild(msg);
+    listFolder('guestbook', D.guestbook, function(list){
+      root.removeChild(msg);
+      if (!list.length) return empty('방명록이 곧 공개됩니다.');
+      count(list.length);
+      var g = el('div','book');
+      list.forEach(function(p,i){
+        var b = el('button','page'); b.type = 'button'; b.setAttribute('aria-label','방명록 ' + (i+1) + '쪽 크게 보기');
+        var im = el('img'); im.src = p.src; im.alt = '방명록 ' + (i+1) + '쪽'; im.loading = 'lazy'; im.decoding = 'async';
+        b.appendChild(im); b.appendChild(el('span',null,(i+1) + ''));
+        b.onclick = function(){ open(list, i); };
+        g.appendChild(b);
+      });
+      root.appendChild(g);
     });
-    root.appendChild(g);
   }
 
   /* ── 포토월 ── */

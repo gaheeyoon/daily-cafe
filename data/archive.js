@@ -7,15 +7,19 @@
    ============================================================ */
 window.ARCHIVE = {
 
-  /* 방명록: 오프라인 방명록을 찍은 사진 (순서대로 표시)
-     - 원본: photos/guestbook/01.jpg  (가로 1800px 권장)
-     - 썸네일: photos/guestbook/thumb/01.jpg (가로 600px) — 없으면 원본을 사용 */
+  /* 폴더 자동 읽기에 쓰는 저장소 정보 */
+  github: { owner: "gaheeyoon", repo: "daily-cafe", branch: "main" },
+
+
+  /* 방명록: guestbook/ 폴더에 올린 사진이 파일명 순서대로 자동 표시됩니다.
+     (GitHub 저장소의 guestbook 폴더에 jpg·png·webp 사진을 올리기만 하면 됩니다.)
+     아래 목록은 GitHub 에서 폴더를 읽어 오지 못할 때(로컬 미리보기 등)만 쓰는 예비용입니다. */
   guestbook: [
-    { src: "photos/guestbook/01.jpg", thumb: "photos/guestbook/thumb/01.jpg" },
-    { src: "photos/guestbook/02.jpg", thumb: "photos/guestbook/thumb/02.jpg" },
-    { src: "photos/guestbook/03.jpg", thumb: "photos/guestbook/thumb/03.jpg" },
-    { src: "photos/guestbook/04.jpg", thumb: "photos/guestbook/thumb/04.jpg" },
-    { src: "photos/guestbook/05.jpg", thumb: "photos/guestbook/thumb/05.jpg" }
+    { src: "guestbook/01.jpg" },
+    { src: "guestbook/02.jpg" },
+    { src: "guestbook/03.jpg" },
+    { src: "guestbook/04.jpg" },
+    { src: "guestbook/05.jpg" }
   ],
 
   /* 포토월: 포토월 앞에서 찍은 사진 */
