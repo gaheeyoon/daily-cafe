@@ -114,35 +114,42 @@
     });
   }
 
-  /* ── 포토월 ── */
-  function photowall(){
-    var list = D.photowall || [];
-    if (!list.length) return empty('포토월 사진이 곧 공개됩니다.');
-    count(list.length);
-    var wall = el('div','wall');
-    list.forEach(function(p,i){
-      var b = el('button','polaroid'); b.type = 'button';
-      var im = el('img'); im.src = p.src; im.alt = p.caption || '포토월 사진'; im.loading = 'lazy';
-      b.appendChild(im); b.appendChild(el('span',null,p.caption || ''));
-      b.onclick = function(){ open(list, i); };
-      wall.appendChild(b);
+  /* ── 포토월 / 사진: 폴더의 사진 전부 표시 ── */
+  function folderPage(folder, fallback, emptyMsg, build){
+    var msg = el('div','empty','불러오는 중…'); root.appendChild(msg);
+    listFolder(folder, fallback, function(list){
+      root.removeChild(msg);
+      if (!list.length) return empty(emptyMsg);
+      count(list.length);
+      root.appendChild(build(list));
     });
-    root.appendChild(wall);
   }
 
-  /* ── 사진 ── */
-  function photos(){
-    var list = D.photos || [];
-    if (!list.length) return empty('행사 사진이 곧 공개됩니다.');
-    count(list.length);
-    var g = el('div','gallery');
-    list.forEach(function(p,i){
-      var b = el('button'); b.type = 'button'; b.setAttribute('aria-label', p.caption || ('사진 ' + (i+1)));
-      var im = el('img'); im.src = p.src; im.alt = p.caption || ''; im.loading = 'lazy';
-      b.appendChild(im); b.onclick = function(){ open(list, i); };
-      g.appendChild(b);
+  function photowall(){
+    folderPage('photos/wall', D.photowall, '포토월 사진이 곧 공개됩니다.', function(list){
+      var wall = el('div','wall');
+      list.forEach(function(p,i){
+        var b = el('button','polaroid'); b.type = 'button'; b.setAttribute('aria-label','포토월 사진 ' + (i+1) + ' 크게 보기');
+        var im = el('img'); im.src = p.src; im.alt = '포토월 사진 ' + (i+1); im.loading = 'lazy'; im.decoding = 'async';
+        b.appendChild(im);
+        b.onclick = function(){ open(list, i); };
+        wall.appendChild(b);
+      });
+      return wall;
     });
-    root.appendChild(g);
+  }
+
+  function photos(){
+    folderPage('photos/gallery', D.photos, '행사 사진이 곧 공개됩니다.', function(list){
+      var g = el('div','gallery');
+      list.forEach(function(p,i){
+        var b = el('button'); b.type = 'button'; b.setAttribute('aria-label','사진 ' + (i+1) + ' 크게 보기');
+        var im = el('img'); im.src = p.src; im.alt = '행사 사진 ' + (i+1); im.loading = 'lazy'; im.decoding = 'async';
+        b.appendChild(im); b.onclick = function(){ open(list, i); };
+        g.appendChild(b);
+      });
+      return g;
+    });
   }
 
   /* ── 결산 ── */

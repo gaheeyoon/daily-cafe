@@ -60,13 +60,13 @@ main{padding:26px 22px 40px;flex:1;}
 
 /* 포토월 (폴라로이드) */
 .wall{display:grid;grid-template-columns:1fr 1fr;gap:22px 14px;padding:4px 2px;}
-.polaroid{background:#fff;padding:8px 8px 12px;border:1px solid var(--line);box-shadow:0 6px 16px rgba(0,0,0,.09);cursor:pointer;
+.polaroid{background:#fff;padding:7px 7px 22px;border:1px solid var(--line);box-shadow:0 6px 16px rgba(0,0,0,.09);cursor:pointer;
   transition:transform .2s ease;border:0;font:inherit;text-align:left;}
 .polaroid:nth-child(odd){transform:rotate(-1.6deg);}
 .polaroid:nth-child(even){transform:rotate(1.4deg);margin-top:10px;}
 .polaroid:hover,.polaroid:focus-visible{transform:rotate(0) scale(1.03);}
-.polaroid img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;background:var(--faint);}
-.polaroid span{display:block;margin-top:9px;text-align:center;font-size:13px;color:var(--ink-soft);letter-spacing:-.02em;min-height:1.7em;}
+.polaroid img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--faint);}
+
 
 /* 사진 */
 .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}

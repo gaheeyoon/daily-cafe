@@ -20,12 +20,12 @@ window.ARCHIVE = {
      아래 목록은 GitHub 에서 폴더를 읽어 오지 못할 때(로컬 미리보기 등)만 쓰는 예비용이며, 비워 두어도 됩니다. */
   guestbook: [],
 
-  /* 포토월: 포토월 앞에서 찍은 사진 */
+  /* 포토월: photos/wall/ 폴더의 사진이 자동 표시됩니다. (아래는 예비용, 비워 두어도 됩니다) */
   photowall: [
     // { src: "photos/wall/01.jpg", caption: "학부모회 임원진" },
   ],
 
-  /* 사진: 행사 현장 사진 */
+  /* 사진: photos/gallery/ 폴더의 사진이 자동 표시됩니다. (아래는 예비용, 비워 두어도 됩니다) */
   photos: [
     // { src: "photos/gallery/01.jpg", caption: "행사 준비" },
   ],
