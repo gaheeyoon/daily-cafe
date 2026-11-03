@@ -168,7 +168,7 @@
     list.forEach(function(s){
       var li = el('li');
       li.appendChild(el('span','goods',s.goods));
-      li.appendChild(el('span','qty', s.qty != null ? s.qty.toLocaleString('ko-KR') + '개' : ''));
+      li.appendChild(el('span','qty', s.qty != null ? s.qty.toLocaleString('ko-KR') + (s.unit || '개') : ''));
       li.appendChild(el('span','donor',s.donor || ''));
       ul.appendChild(li);
     });

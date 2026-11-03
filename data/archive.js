@@ -31,7 +31,7 @@ window.ARCHIVE = {
   ],
 
   /* 결산 — 후원 물품 (금액은 표시하지 않습니다)
-     goods: 품목 / qty: 개수 (숫자, 모르면 null → "개" 가 자동으로 붙습니다) / donor: 후원자 (없으면 "") */
+     goods: 품목 / qty: 개수 (숫자, 모르면 null) / unit: 단위 (생략하면 "개") / donor: 후원자 (없으면 "") */
   summary: {
     note: "수익금 전액은 태안군청소년 장학기금으로 전달됩니다.",
     sponsors: [
@@ -43,7 +43,7 @@ window.ARCHIVE = {
       { goods: "활새우1kg", qty: 10, donor: "진수일·박지혜" },
       { goods: "고구마(하)5kg", qty: 15, donor: "박지혜" },
       { goods: "고구마(혼합)3kg", qty: 10, donor: "윤가희" },
-      { goods: "립스틱(3개set)", qty: 30, donor: "김민경" },
+      { goods: "립스틱(3개set)", qty: 30, unit: "세트", donor: "김민경" },
       { goods: "유기농 쨈", qty: 12, donor: "" },
       { goods: "비건치약", qty: 20, donor: "" },
       { goods: "새치커버스틱", qty: 10, donor: "이가영" },
