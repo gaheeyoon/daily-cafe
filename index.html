@@ -270,6 +270,33 @@
     .sponsors li{font-size:14px;}
   }
 
+
+  /* ── 아카이브 ─────────────────────────── */
+  .ended{
+    background:var(--ink);color:#fff;text-align:center;
+    padding:11px 16px;font-size:13px;letter-spacing:-.01em;
+  }
+  .ended a{color:#fff;font-weight:800;text-decoration:underline;text-underline-offset:3px;}
+
+  .archive{padding:46px 30px 0;scroll-margin-top:10px;}
+  .archive .lead{
+    text-align:center;font-size:15px;color:var(--ink-soft);
+    letter-spacing:-.02em;line-height:1.9;margin-bottom:22px;
+  }
+  .archive ul{list-style:none;border-top:1px solid var(--line);}
+  .archive li a{
+    display:flex;align-items:center;gap:14px;
+    padding:18px 4px;border-bottom:1px solid var(--line);
+    text-decoration:none;color:var(--ink);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .archive li a:active{background:var(--faint);}
+  .archive .no{font-size:12px;font-weight:800;color:var(--red);letter-spacing:.08em;width:22px;}
+  .archive .tx{flex:1;}
+  .archive .tx b{display:block;font-size:17px;font-weight:800;letter-spacing:-.02em;}
+  .archive .tx small{display:block;font-size:13px;color:#9A938A;letter-spacing:-.01em;}
+  .archive .arr{color:#B9B2A8;font-size:20px;}
+
   /* ── 푸터 ─────────────────────────────── */
   .footer{
     background:var(--red);
@@ -307,6 +334,8 @@
 </style>
 </head>
 <body>
+
+<div class="ended">사랑나눔 하루찻집이 따뜻하게 마무리되었습니다. <a href="#archive">기록 보기</a></div>
 
 <div class="card">
 
@@ -415,6 +444,20 @@
           </ul>
         </div>
       </div>
+  </section>
+
+  <section class="archive" id="archive">
+    <div class="sec-head"><h2>ARCHIVE</h2></div>
+    <p class="lead">
+      함께해 주셔서 감사합니다.<br>
+      그날의 기록을 남깁니다.
+    </p>
+    <ul>
+      <li><a href="guestbook.html"><span class="no">01</span><span class="tx"><b>방명록</b><small>남겨 주신 따뜻한 마음</small></span><span class="arr">›</span></a></li>
+      <li><a href="photowall.html"><span class="no">02</span><span class="tx"><b>포토월</b><small>그날의 웃음을 한 장에</small></span><span class="arr">›</span></a></li>
+      <li><a href="photos.html"><span class="no">03</span><span class="tx"><b>사진</b><small>행사 현장 스케치</small></span><span class="arr">›</span></a></li>
+      <li><a href="summary.html"><span class="no">04</span><span class="tx"><b>결산</b><small>수익금과 후원 내역</small></span><span class="arr">›</span></a></li>
+    </ul>
   </section>
 
   <!-- 
