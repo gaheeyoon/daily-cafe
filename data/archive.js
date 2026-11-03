@@ -30,26 +30,29 @@ window.ARCHIVE = {
     // { src: "photos/gallery/01.jpg", caption: "행사 준비" },
   ],
 
-  /* 결산 (금액 단위: 원) — 합계와 장학기금은 자동 계산됩니다 */
+  /* 결산 — 후원 물품 (금액은 표시하지 않습니다)
+     goods: 품목 / qty: 개수 (숫자, 모르면 null → "개" 가 자동으로 붙습니다) / donor: 후원자 (없으면 "") */
   summary: {
-    stats: [
-      { k: "참석", v: "000명" },
-      { k: "후원처", v: "00곳" },
-      { k: "회차", v: "3회" }
-    ],
-    income: [
-      { label: "음료·다과 판매", amount: 0 },
-      { label: "후원금", amount: 0 },
-      { label: "물품 판매", amount: 0 }
-    ],
-    expense: [
-      { label: "재료비", amount: 0 },
-      { label: "대관·행사 경비", amount: 0 }
-    ],
-    donation: "태안군청소년 장학기금으로 전달됩니다.",   // 전달 안내 문구
+    note: "수익금 전액은 태안군청소년 장학기금으로 전달됩니다.",
     sponsors: [
-      { goods: "쌀 200kg", donor: "홍길동" },
-      { goods: "샤브마니아 50만원 상당", donor: "홍길동" }
+      { goods: "가래떡", qty: 70, donor: "정선교" },
+      { goods: "떡국떡", qty: 50, donor: "홍선희" },
+      { goods: "샤브마니아외식상품권", qty: 10, donor: "이준규·홍선희" },
+      { goods: "쌀(10kg)", qty: 20, donor: "홍민기·홍선희" },
+      { goods: "쌀(10kg)", qty: 10, donor: "정선교" },
+      { goods: "활새우1kg", qty: 10, donor: "진수일·박지혜" },
+      { goods: "고구마(하)5kg", qty: 15, donor: "박지혜" },
+      { goods: "고구마(혼합)3kg", qty: 10, donor: "윤가희" },
+      { goods: "립스틱(3개set)", qty: 30, donor: "김민경" },
+      { goods: "유기농 쨈", qty: 12, donor: "" },
+      { goods: "비건치약", qty: 20, donor: "" },
+      { goods: "새치커버스틱", qty: 10, donor: "이가영" },
+      { goods: "건강즙 4종", qty: 30, donor: "유명근" },
+      { goods: "마스크팩", qty: 50, donor: "김천호" },
+      { goods: "비맥스(영양제)", qty: 30, donor: "" },
+      { goods: "리시브(영양제)", qty: 34, donor: "" },
+      { goods: "자담치킨외식상품권", qty: 4, donor: "임환·국은희" },
+      { goods: "장아찌, 묵은지", qty: null, donor: "오진아" }
     ]
   }
 };

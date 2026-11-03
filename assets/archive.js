@@ -9,8 +9,6 @@
     if (text != null) e.textContent = text;
     return e;
   }
-  function won(n){ return Number(n||0).toLocaleString('ko-KR') + '원'; }
-  function sum(a){ return (a||[]).reduce(function(s,x){ return s + (Number(x.amount)||0); }, 0); }
   function empty(msg){ root.appendChild(el('div','empty',msg)); }
   function count(n){ root.appendChild(el('div','count','총 ' + n + '개')); }
 
@@ -152,42 +150,30 @@
     });
   }
 
-  /* ── 결산 ── */
-  function ledger(rows, totalLabel){
-    var ul = el('ul','ledger');
-    rows.forEach(function(r){
-      var li = el('li'); li.appendChild(el('span',null,r.label)); li.appendChild(el('span','a',won(r.amount))); ul.appendChild(li);
-    });
-    var t = el('li','total'); t.appendChild(el('span',null,totalLabel)); t.appendChild(el('span','a',won(sum(rows)))); ul.appendChild(t);
-    return ul;
-  }
+  /* ── 결산 (후원 물품: 품목 · 개수 · 후원자) ── */
   function summary(){
-    var S = D.summary; if (!S) return empty('결산이 곧 공개됩니다.');
-    var income = sum(S.income), expense = sum(S.expense), net = income - expense;
+    var S = D.summary, list = S && S.sponsors;
+    if (!list || !list.length) return empty('결산이 곧 공개됩니다.');
+
     var hl = el('div','hl');
-    hl.appendChild(el('div','k','장학기금 마련 수익'));
-    hl.appendChild(el('div','v',won(net)));
-    if (S.donation) hl.appendChild(el('div','s',S.donation));
+    hl.appendChild(el('div','k','마음을 보태 주신 후원 물품'));
+    hl.appendChild(el('div','v',list.length + '종'));
+    hl.appendChild(el('div','s','따뜻한 마음을 보태 주셔서 감사합니다.'));
     root.appendChild(hl);
 
-    if (S.stats && S.stats.length){
-      var st = el('div','stats');
-      S.stats.forEach(function(s){ var c = el('div','stat'); c.appendChild(el('div','v',s.v)); c.appendChild(el('div','k',s.k)); st.appendChild(c); });
-      root.appendChild(st);
-    }
-    var h = el('div','sec-head'); h.appendChild(el('h2',null,'수입')); root.appendChild(h);
-    root.appendChild(ledger(S.income || [], '수입 합계'));
-    h = el('div','sec-head'); h.appendChild(el('h2',null,'지출')); root.appendChild(h);
-    root.appendChild(ledger(S.expense || [], '지출 합계'));
-
-    if (S.sponsors && S.sponsors.length){
-      h = el('div','sec-head'); h.appendChild(el('h2',null,'마음을 보태 주신 분들')); root.appendChild(h);
-      var ul = el('ul','sponsors');
-      S.sponsors.forEach(function(s){ var li = el('li'); li.appendChild(el('span','goods',s.goods)); li.appendChild(el('span','donor',s.donor)); ul.appendChild(li); });
-      root.appendChild(ul);
-    }
-    root.appendChild(el('p','thanks','따뜻한 마음을 보태 주셔서 감사합니다.\n수익금 전액은 태안군청소년 장학기금으로 전달됩니다.'));
-    root.lastChild.style.whiteSpace = 'pre-line';
+    var h = el('div','sec-head'); h.appendChild(el('h2',null,'마음을 보태 주신 분들')); root.appendChild(h);
+    var ul = el('ul','sponsors');
+    var th = el('li','th'); th.appendChild(el('span','goods','품목')); th.appendChild(el('span','qty','개수')); th.appendChild(el('span','donor','후원'));
+    ul.appendChild(th);
+    list.forEach(function(s){
+      var li = el('li');
+      li.appendChild(el('span','goods',s.goods));
+      li.appendChild(el('span','qty', s.qty != null ? s.qty.toLocaleString('ko-KR') + '개' : ''));
+      li.appendChild(el('span','donor',s.donor || ''));
+      ul.appendChild(li);
+    });
+    root.appendChild(ul);
+    if (S.note){ var t = el('p','thanks',S.note); root.appendChild(t); }
   }
 
   ({guestbook:guestbook, photowall:photowall, photos:photos, summary:summary})[page]();
