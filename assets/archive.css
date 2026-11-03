@@ -45,6 +45,19 @@ main{padding:26px 22px 40px;flex:1;}
 .page img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--faint);}
 .page span{position:absolute;left:6px;bottom:6px;min-width:22px;padding:1px 7px;border-radius:999px;background:rgba(28,26,24,.78);color:#fff;font-size:12px;font-weight:700;}
 
+/* 방명록 섹션 */
+.part[hidden]{display:none;}
+.part + .part{margin-top:46px;}
+.part .sec-head{margin-top:0;}
+.sec-desc{text-align:center;font-size:14px;color:var(--ink-soft);letter-spacing:-.02em;line-height:1.8;margin:-2px 0 18px;}
+.part .count{margin-bottom:12px;}
+/* 크기가 제각각인 사진: 비율을 유지한 채 2열 벽돌 배치 */
+.slips{columns:2;column-gap:12px;}
+.slip-wrap{break-inside:avoid;-webkit-column-break-inside:avoid;margin:0 0 12px;}
+.slip{display:block;width:100%;padding:6px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 3px 10px rgba(0,0,0,.06);cursor:pointer;transition:transform .18s ease;}
+.slip:active{transform:scale(.985);}
+.slip img{display:block;width:100%;height:auto;border-radius:6px;background:var(--faint);}
+
 /* 포토월 (폴라로이드) */
 .wall{display:grid;grid-template-columns:1fr 1fr;gap:22px 14px;padding:4px 2px;}
 .polaroid{background:#fff;padding:8px 8px 12px;border:1px solid var(--line);box-shadow:0 6px 16px rgba(0,0,0,.09);cursor:pointer;

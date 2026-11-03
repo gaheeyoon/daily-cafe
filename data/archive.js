@@ -11,7 +11,11 @@ window.ARCHIVE = {
   github: { owner: "gaheeyoon", repo: "daily-cafe", branch: "main" },
 
 
-  /* 방명록: guestbook/ 폴더에 올린 사진이 파일명 순서대로 자동 표시됩니다.
+  /* 방명록 페이지는 폴더별로 사진이 자동 표시됩니다 (파일명 순).
+       guestbook/  손글씨 방명록
+       children/   용돈을 기부해 준 어린이들
+       envelopes/  기부 봉투에 글귀를 남겨 주신 분들 (사진이 없으면 섹션이 숨겨집니다)
+     방명록: guestbook/ 폴더에 올린 사진이 파일명 순서대로 자동 표시됩니다.
      (GitHub 저장소의 guestbook 폴더에 jpg·png·webp 사진을 올리기만 하면 됩니다.)
      아래 목록은 GitHub 에서 폴더를 읽어 오지 못할 때(로컬 미리보기 등)만 쓰는 예비용이며, 비워 두어도 됩니다. */
   guestbook: [],

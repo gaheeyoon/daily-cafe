@@ -66,22 +66,51 @@
       .catch(function(){ done(); });
   }
 
-  /* ── 방명록 (guestbook/ 폴더의 사진) ── */
-  function guestbook(){
-    var msg = el('div','empty','불러오는 중…'); root.appendChild(msg);
-    listFolder('guestbook', D.guestbook, function(list){
-      root.removeChild(msg);
-      if (!list.length) return empty('방명록이 곧 공개됩니다.');
-      count(list.length);
-      var g = el('div','book');
+  /* ── 방명록 페이지: 폴더별 섹션 ── */
+  var SECTIONS = [
+    { folder: 'guestbook', fallback: D.guestbook, layout: 'book', required: true,
+      title: '방명록', desc: '찾아 주신 분들이 손글씨로 남겨 주신 마음입니다.' },
+    { folder: 'children', layout: 'slips',
+      title: '따뜻한 마음을 보태 준 어린이들', desc: '용돈을 가져와 기부해 준 어린이들이 무척 인상적이었습니다.' },
+    { folder: 'envelopes', layout: 'slips',
+      title: '따뜻한 한마음을 남겨 주신 분들', desc: '기부 봉투에 정성스러운 글귀를 남겨 주셨습니다.' }
+  ];
+
+  function renderSection(S, box){
+    var head = el('div','sec-head'); head.appendChild(el('h2',null,S.title)); box.appendChild(head);
+    if (S.desc) box.appendChild(el('p','sec-desc',S.desc));
+    var body = el('div'); box.appendChild(body);
+    body.appendChild(el('div','empty','불러오는 중…'));
+    listFolder(S.folder, S.fallback, function(list){
+      body.textContent = '';
+      if (!list.length){
+        if (S.required) body.appendChild(el('div','empty','사진이 곧 공개됩니다.'));
+        else box.hidden = true;     /* 사진이 없는 섹션은 숨김 */
+        return;
+      }
+      box.hidden = false;
+      body.appendChild(el('div','count','총 ' + list.length + '장'));
+      var wrap = el('div', S.layout === 'slips' ? 'slips' : 'book');
       list.forEach(function(p,i){
-        var b = el('button','page'); b.type = 'button'; b.setAttribute('aria-label','방명록 ' + (i+1) + '쪽 크게 보기');
-        var im = el('img'); im.src = p.src; im.alt = '방명록 ' + (i+1) + '쪽'; im.loading = 'lazy'; im.decoding = 'async';
-        b.appendChild(im); b.appendChild(el('span',null,(i+1) + ''));
+        var b = el('button', S.layout === 'slips' ? 'slip' : 'page'); b.type = 'button';
+        b.setAttribute('aria-label', S.title + ' ' + (i+1) + ' 크게 보기');
+        var im = el('img'); im.src = p.src; im.alt = S.title + ' ' + (i+1); im.loading = 'lazy'; im.decoding = 'async';
+        b.appendChild(im);
+        if (S.layout !== 'slips') b.appendChild(el('span',null,(i+1) + ''));
         b.onclick = function(){ open(list, i); };
-        g.appendChild(b);
+        if (S.layout === 'slips'){ var w = el('div','slip-wrap'); w.appendChild(b); wrap.appendChild(w); }
+        else wrap.appendChild(b);
       });
-      root.appendChild(g);
+      body.appendChild(wrap);
+    });
+  }
+
+  function guestbook(){
+    SECTIONS.forEach(function(S){
+      var box = el('section','part');
+      if (!S.required) box.hidden = true;
+      root.appendChild(box);
+      renderSection(S, box);
     });
   }
 
