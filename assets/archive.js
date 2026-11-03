@@ -15,17 +15,18 @@
   function count(n){ root.appendChild(el('div','count','총 ' + n + '개')); }
 
   /* ── 라이트박스 ── */
-  var lb, lbImg, lbCap, items = [], idx = 0;
+  var lb, lbImg, lbCap, stage, items = [], idx = 0;
   function buildLB(){
     lb = el('div','lb'); lb.setAttribute('role','dialog'); lb.setAttribute('aria-modal','true');
-    lbImg = el('img'); lbCap = el('div','cap');
+    stage = el('div','stage'); lbImg = el('img'); stage.appendChild(lbImg); lbCap = el('div','cap');
+    lbImg.onclick = function(e){ e.stopPropagation(); stage.classList.toggle('zoom'); stage.scrollLeft = 0; stage.scrollTop = 0; };
     var x = el('button','x','×'); x.setAttribute('aria-label','닫기');
     var p = el('button','prev','‹'); p.setAttribute('aria-label','이전');
     var n = el('button','next','›'); n.setAttribute('aria-label','다음');
     x.onclick = close; p.onclick = function(e){ e.stopPropagation(); go(-1); };
     n.onclick = function(e){ e.stopPropagation(); go(1); };
     lb.onclick = function(e){ if (e.target === lb) close(); };
-    [lbImg,lbCap,x,p,n].forEach(function(c){ lb.appendChild(c); });
+    [stage,lbCap,x,p,n].forEach(function(c){ lb.appendChild(c); });
     document.body.appendChild(lb);
     document.addEventListener('keydown', function(e){
       if (!lb.classList.contains('on')) return;
@@ -38,28 +39,28 @@
     lb.addEventListener('touchend', function(e){
       if (sx == null) return;
       var dx = e.changedTouches[0].clientX - sx; sx = null;
-      if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+      if (!stage.classList.contains('zoom') && Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
     });
   }
-  function show(){ lbImg.src = items[idx].src; lbImg.alt = items[idx].caption || ''; lbCap.textContent = (items[idx].caption || '') + (items.length > 1 ? '  (' + (idx+1) + '/' + items.length + ')' : ''); }
+  function show(){ stage.classList.remove('zoom'); lbImg.src = items[idx].src; lbImg.alt = items[idx].caption || ''; lbCap.textContent = (items[idx].caption ? items[idx].caption + '  ' : '') + (items.length > 1 ? (idx+1) + ' / ' + items.length : '') + '  ·  사진을 누르면 확대'; }
   function open(list, i){ items = list; idx = i; if (!lb) buildLB(); show(); lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
   function close(){ lb.classList.remove('on'); document.body.style.overflow = ''; }
   function go(d){ idx = (idx + d + items.length) % items.length; show(); }
 
-  /* ── 방명록 ── */
+  /* ── 방명록 (오프라인 방명록 사진) ── */
   function guestbook(){
     var list = D.guestbook || [];
     if (!list.length) return empty('방명록이 곧 공개됩니다.');
     count(list.length);
-    var box = el('div','notes');
-    list.forEach(function(g){
-      var n = el('article','note' + (g.image ? ' has-img' : ''));
-      if (g.image){ var im = el('img'); im.src = g.image; im.alt = (g.name || '') + '님의 방명록'; im.loading = 'lazy'; n.appendChild(im); }
-      if (g.message) n.appendChild(el('p','msg',g.message));
-      var by = el('div','by'); by.appendChild(el('b',null,g.name || '익명')); by.appendChild(el('span',null,g.date || ''));
-      n.appendChild(by); box.appendChild(n);
+    var g = el('div','book');
+    list.forEach(function(p,i){
+      var b = el('button','page'); b.type = 'button'; b.setAttribute('aria-label','방명록 ' + (i+1) + '쪽 크게 보기');
+      var im = el('img'); im.src = p.thumb || p.src; im.alt = p.caption || ('방명록 ' + (i+1)); im.loading = 'lazy';
+      b.appendChild(im); b.appendChild(el('span',null,(i+1) + ''));
+      b.onclick = function(){ open(list, i); };
+      g.appendChild(b);
     });
-    root.appendChild(box);
+    root.appendChild(g);
   }
 
   /* ── 포토월 ── */

@@ -7,11 +7,15 @@
    ============================================================ */
 window.ARCHIVE = {
 
-  /* 방명록: image 는 손글씨 방명록을 사진으로 남길 때만 (선택) */
+  /* 방명록: 오프라인 방명록을 찍은 사진 (순서대로 표시)
+     - 원본: photos/guestbook/01.jpg  (가로 1800px 권장)
+     - 썸네일: photos/guestbook/thumb/01.jpg (가로 600px) — 없으면 원본을 사용 */
   guestbook: [
-    { name: "예시 방문객", message: "따뜻한 차 한잔과 좋은 마음 잘 나누고 갑니다.\n아이들에게 힘이 되길 바랍니다.", date: "2026. 11. 2." },
-    { name: "예시 학부모", message: "내년에도 꼭 다시 오겠습니다!", date: "2026. 11. 2." }
-    // { name: "홍길동", message: "...", date: "2026. 11. 2.", image: "photos/guestbook/01.jpg" },
+    { src: "photos/guestbook/01.jpg", thumb: "photos/guestbook/thumb/01.jpg" },
+    { src: "photos/guestbook/02.jpg", thumb: "photos/guestbook/thumb/02.jpg" },
+    { src: "photos/guestbook/03.jpg", thumb: "photos/guestbook/thumb/03.jpg" },
+    { src: "photos/guestbook/04.jpg", thumb: "photos/guestbook/thumb/04.jpg" },
+    { src: "photos/guestbook/05.jpg", thumb: "photos/guestbook/thumb/05.jpg" }
   ],
 
   /* 포토월: 포토월 앞에서 찍은 사진 */
