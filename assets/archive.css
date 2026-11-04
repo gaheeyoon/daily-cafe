@@ -92,7 +92,8 @@ main{padding:26px 22px 40px;flex:1;}
 .hl .k{font-size:13px;font-weight:700;letter-spacing:.04em;opacity:.9;}
 .hl .v{font-size:36px;font-weight:900;letter-spacing:-.02em;margin-top:2px;}
 .hl .s{font-size:13px;opacity:.88;margin-top:4px;}
-.sec-head{display:flex;align-items:center;gap:12px;margin:34px 0 14px;}
+.sec-head{display:flex;align-items:center;gap:12px;margin:58px 0 14px;}
+main > .sec-head:first-child{margin-top:10px;}
 .sec-head::before,.sec-head::after{content:"";flex:1;height:1px;background:var(--line);}
 .sec-head h2{font-size:14px;font-weight:800;color:var(--ink-soft);letter-spacing:.06em;white-space:nowrap;}
 .ledger{list-style:none;border-top:1.5px solid var(--ink);}
