@@ -20,36 +20,66 @@ window.ARCHIVE = {
      아래 목록은 GitHub 에서 폴더를 읽어 오지 못할 때(로컬 미리보기 등)만 쓰는 예비용이며, 비워 두어도 됩니다. */
   guestbook: [],
 
-  /* 포토월: 포토월 앞에서 찍은 사진 */
+  /* 포토월: photos/wall/ 폴더의 사진이 자동 표시됩니다. (아래는 예비용, 비워 두어도 됩니다) */
   photowall: [
     // { src: "photos/wall/01.jpg", caption: "학부모회 임원진" },
   ],
 
-  /* 사진: 행사 현장 사진 */
+  /* 사진: photos/gallery/ 폴더의 사진이 자동 표시됩니다. (아래는 예비용, 비워 두어도 됩니다) */
   photos: [
     // { src: "photos/gallery/01.jpg", caption: "행사 준비" },
   ],
 
-  /* 결산 (금액 단위: 원) — 합계와 장학기금은 자동 계산됩니다 */
+  /* 결산 — 후원 물품 (금액은 표시하지 않습니다)
+     goods: 품목 / qty: 개수 (숫자, 모르면 null) / unit: 단위 (생략하면 "개") / donor: 후원자 (없으면 "") */
   summary: {
-    stats: [
-      { k: "참석", v: "000명" },
-      { k: "후원처", v: "00곳" },
-      { k: "회차", v: "3회" }
+    /* 결산 항목 (금액 비공개 — 항목만 표시)
+       groups: 묶음별 제목(title)과 항목(rows). total: true 이면 굵은 빨간 글씨로 표시합니다.
+       나중에 금액을 공개하려면 항목에 amount: 숫자 를 추가하면 "0,000원" 으로 표시됩니다. */
+    groups: [
+      { title: "수입", rows: [
+        { label: "물품지원금(운영위원장협의회)" },
+        { label: "물품지원금(학부모회장협의회)" },
+        { label: "총수입(티켓판매, 후원금)" },
+        { label: "총수입", total: true }
+      ]},
+      { title: "지출", rows: [
+        { label: "홍보비" },
+        { label: "운영비" },
+        { label: "물품대금" },
+        { label: "부식비 및 잡비" },
+        { label: "총지출", total: true }
+      ]},
+      { title: "잔액", rows: [
+        { label: "하루찻집총수입" },
+        { label: "하루찻집잔액", total: true }
+      ]},
+      { title: "장학금", rows: [
+        { label: "2026년 졸업생 장학금" },
+        { label: "태안사랑장학회 장학금" },
+        { label: "장학금 지출 후 잔액", total: true }
+      ]}
     ],
-    income: [
-      { label: "음료·다과 판매", amount: 0 },
-      { label: "후원금", amount: 0 },
-      { label: "물품 판매", amount: 0 }
-    ],
-    expense: [
-      { label: "재료비", amount: 0 },
-      { label: "대관·행사 경비", amount: 0 }
-    ],
-    donation: "태안군청소년 장학기금으로 전달됩니다.",   // 전달 안내 문구
+    note: "수익금 전액은 태안군청소년 장학기금으로 전달됩니다.",
     sponsors: [
-      { goods: "쌀 200kg", donor: "홍길동" },
-      { goods: "샤브마니아 50만원 상당", donor: "홍길동" }
+      { goods: "가래떡", qty: 70, donor: "정선교" },
+      { goods: "떡국떡", qty: 50, donor: "홍선희" },
+      { goods: "샤브마니아외식상품권", qty: 10, donor: "이준규·홍선희" },
+      { goods: "쌀(10kg)", qty: 20, donor: "홍민기·홍선희" },
+      { goods: "쌀(10kg)", qty: 10, donor: "정선교" },
+      { goods: "활새우1kg", qty: 10, donor: "진수일·박지혜" },
+      { goods: "고구마(하)5kg", qty: 15, donor: "박지혜" },
+      { goods: "고구마(혼합)3kg", qty: 10, donor: "윤가희" },
+      { goods: "립스틱(3개set)", qty: 30, unit: "세트", donor: "김민경" },
+      { goods: "유기농 쨈", qty: 12, donor: "" },
+      { goods: "비건치약", qty: 20, donor: "" },
+      { goods: "새치커버스틱", qty: 10, donor: "이가영" },
+      { goods: "건강즙 4종", qty: 30, donor: "유명근" },
+      { goods: "마스크팩", qty: 50, donor: "김천호" },
+      { goods: "비맥스(영양제)", qty: 30, donor: "" },
+      { goods: "리시브(영양제)", qty: 34, donor: "" },
+      { goods: "자담치킨외식상품권", qty: 4, donor: "임환·국은희" },
+      { goods: "장아찌, 묵은지", qty: null, donor: "오진아" }
     ]
   }
 };

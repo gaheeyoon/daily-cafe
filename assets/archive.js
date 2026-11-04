@@ -9,8 +9,6 @@
     if (text != null) e.textContent = text;
     return e;
   }
-  function won(n){ return Number(n||0).toLocaleString('ko-KR') + '원'; }
-  function sum(a){ return (a||[]).reduce(function(s,x){ return s + (Number(x.amount)||0); }, 0); }
   function empty(msg){ root.appendChild(el('div','empty',msg)); }
   function count(n){ root.appendChild(el('div','count','총 ' + n + '개')); }
 
@@ -114,73 +112,86 @@
     });
   }
 
-  /* ── 포토월 ── */
+  /* ── 포토월 / 사진: 폴더의 사진 전부 표시 ── */
+  function folderPage(folder, fallback, emptyMsg, build){
+    var msg = el('div','empty','불러오는 중…'); root.appendChild(msg);
+    listFolder(folder, fallback, function(list){
+      root.removeChild(msg);
+      if (!list.length) return empty(emptyMsg);
+      count(list.length);
+      root.appendChild(build(list));
+    });
+  }
+
   function photowall(){
-    var list = D.photowall || [];
-    if (!list.length) return empty('포토월 사진이 곧 공개됩니다.');
-    count(list.length);
-    var wall = el('div','wall');
-    list.forEach(function(p,i){
-      var b = el('button','polaroid'); b.type = 'button';
-      var im = el('img'); im.src = p.src; im.alt = p.caption || '포토월 사진'; im.loading = 'lazy';
-      b.appendChild(im); b.appendChild(el('span',null,p.caption || ''));
-      b.onclick = function(){ open(list, i); };
-      wall.appendChild(b);
+    folderPage('photos/wall', D.photowall, '포토월 사진이 곧 공개됩니다.', function(list){
+      var wall = el('div','wall');
+      list.forEach(function(p,i){
+        var b = el('button','polaroid'); b.type = 'button'; b.setAttribute('aria-label','포토월 사진 ' + (i+1) + ' 크게 보기');
+        var im = el('img'); im.src = p.src; im.alt = '포토월 사진 ' + (i+1); im.loading = 'lazy'; im.decoding = 'async';
+        b.appendChild(im);
+        b.onclick = function(){ open(list, i); };
+        wall.appendChild(b);
+      });
+      return wall;
     });
-    root.appendChild(wall);
   }
 
-  /* ── 사진 ── */
   function photos(){
-    var list = D.photos || [];
-    if (!list.length) return empty('행사 사진이 곧 공개됩니다.');
-    count(list.length);
-    var g = el('div','gallery');
-    list.forEach(function(p,i){
-      var b = el('button'); b.type = 'button'; b.setAttribute('aria-label', p.caption || ('사진 ' + (i+1)));
-      var im = el('img'); im.src = p.src; im.alt = p.caption || ''; im.loading = 'lazy';
-      b.appendChild(im); b.onclick = function(){ open(list, i); };
-      g.appendChild(b);
+    folderPage('photos/gallery', D.photos, '행사 사진이 곧 공개됩니다.', function(list){
+      var g = el('div','gallery');
+      list.forEach(function(p,i){
+        var b = el('button'); b.type = 'button'; b.setAttribute('aria-label','사진 ' + (i+1) + ' 크게 보기');
+        var im = el('img'); im.src = p.src; im.alt = '행사 사진 ' + (i+1); im.loading = 'lazy'; im.decoding = 'async';
+        b.appendChild(im); b.onclick = function(){ open(list, i); };
+        g.appendChild(b);
+      });
+      return g;
     });
-    root.appendChild(g);
   }
 
-  /* ── 결산 ── */
-  function ledger(rows, totalLabel){
+  /* ── 결산: 수입 · 지출 (항목만) + 후원 물품 (품목 · 개수 · 후원자) ── */
+  function section(title){ var h = el('div','sec-head'); h.appendChild(el('h2',null,title)); root.appendChild(h); }
+
+  function ledger(rows){
     var ul = el('ul','ledger');
     rows.forEach(function(r){
-      var li = el('li'); li.appendChild(el('span',null,r.label)); li.appendChild(el('span','a',won(r.amount))); ul.appendChild(li);
+      var li = el('li', r.total ? 'total' : '');
+      var l = el('span','l'); l.appendChild(document.createTextNode(r.label));
+      if (r.detail) l.appendChild(el('small',null,r.detail));
+      li.appendChild(l);
+      if (r.amount != null) li.appendChild(el('span','a', Number(r.amount).toLocaleString('ko-KR') + '원'));
+      ul.appendChild(li);
     });
-    var t = el('li','total'); t.appendChild(el('span',null,totalLabel)); t.appendChild(el('span','a',won(sum(rows)))); ul.appendChild(t);
     return ul;
   }
+
   function summary(){
-    var S = D.summary; if (!S) return empty('결산이 곧 공개됩니다.');
-    var income = sum(S.income), expense = sum(S.expense), net = income - expense;
-    var hl = el('div','hl');
-    hl.appendChild(el('div','k','장학기금 마련 수익'));
-    hl.appendChild(el('div','v',won(net)));
-    if (S.donation) hl.appendChild(el('div','s',S.donation));
-    root.appendChild(hl);
+    var S = D.summary;
+    if (!S) return empty('결산이 곧 공개됩니다.');
 
-    if (S.stats && S.stats.length){
-      var st = el('div','stats');
-      S.stats.forEach(function(s){ var c = el('div','stat'); c.appendChild(el('div','v',s.v)); c.appendChild(el('div','k',s.k)); st.appendChild(c); });
-      root.appendChild(st);
-    }
-    var h = el('div','sec-head'); h.appendChild(el('h2',null,'수입')); root.appendChild(h);
-    root.appendChild(ledger(S.income || [], '수입 합계'));
-    h = el('div','sec-head'); h.appendChild(el('h2',null,'지출')); root.appendChild(h);
-    root.appendChild(ledger(S.expense || [], '지출 합계'));
+    (S.groups || []).forEach(function(g){
+      if (!g.rows || !g.rows.length) return;
+      section(g.title); root.appendChild(ledger(g.rows));
+    });
 
-    if (S.sponsors && S.sponsors.length){
-      h = el('div','sec-head'); h.appendChild(el('h2',null,'마음을 보태 주신 분들')); root.appendChild(h);
+    var list = S.sponsors;
+    if (list && list.length){
+      section('마음을 보태 주신 분들');
+      root.appendChild(el('div','count','후원 물품 ' + list.length + '종'));
       var ul = el('ul','sponsors');
-      S.sponsors.forEach(function(s){ var li = el('li'); li.appendChild(el('span','goods',s.goods)); li.appendChild(el('span','donor',s.donor)); ul.appendChild(li); });
+      var th = el('li','th'); th.appendChild(el('span','goods','품목')); th.appendChild(el('span','qty','개수')); th.appendChild(el('span','donor','후원'));
+      ul.appendChild(th);
+      list.forEach(function(s){
+        var li = el('li');
+        li.appendChild(el('span','goods',s.goods));
+        li.appendChild(el('span','qty', s.qty != null ? s.qty.toLocaleString('ko-KR') + (s.unit || '개') : ''));
+        li.appendChild(el('span','donor',s.donor || ''));
+        ul.appendChild(li);
+      });
       root.appendChild(ul);
     }
-    root.appendChild(el('p','thanks','따뜻한 마음을 보태 주셔서 감사합니다.\n수익금 전액은 태안군청소년 장학기금으로 전달됩니다.'));
-    root.lastChild.style.whiteSpace = 'pre-line';
+    if (S.note) root.appendChild(el('p','thanks',S.note));
   }
 
   ({guestbook:guestbook, photowall:photowall, photos:photos, summary:summary})[page]();
