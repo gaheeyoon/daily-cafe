@@ -79,7 +79,7 @@ window.ARCHIVE = {
       { goods: "비맥스(영양제)", qty: 30, donor: "" },
       { goods: "리시브(영양제)", qty: 34, donor: "" },
       { goods: "자담치킨외식상품권", qty: 4, donor: "임환·국은희" },
-      { goods: "장아찌, 묵은지", qty: null, donor: "오진아" }
+      { goods: "장아찌, 묵은지", qty: 19, donor: "오진아" }
     ]
   }
 };
