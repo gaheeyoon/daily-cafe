@@ -51,8 +51,8 @@ window.ARCHIVE = {
         { label: "총지출", total: true }
       ]},
       { title: "잔액", rows: [
-        { label: "일일찻집총수입" },
-        { label: "일일찻집잔액", total: true }
+        { label: "하루찻집총수입" },
+        { label: "하루찻집잔액", total: true }
       ]},
       { title: "장학금", rows: [
         { label: "2026년 졸업생 장학금" },
