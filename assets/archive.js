@@ -161,6 +161,7 @@
       if (r.detail) l.appendChild(el('small',null,r.detail));
       li.appendChild(l);
       if (r.amount != null) li.appendChild(el('span','a', Number(r.amount).toLocaleString('ko-KR') + '원'));
+      else if (r.status) li.appendChild(el('span','st', r.status));
       ul.appendChild(li);
     });
     return ul;
