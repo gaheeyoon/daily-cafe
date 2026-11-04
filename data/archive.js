@@ -33,22 +33,22 @@ window.ARCHIVE = {
   /* 결산 — 후원 물품 (금액은 표시하지 않습니다)
      goods: 품목 / qty: 개수 (숫자, 모르면 null) / unit: 단위 (생략하면 "개") / donor: 후원자 (없으면 "") */
   summary: {
-    /* 결산 항목 (금액 비공개 — 항목만 표시)
+    /* 결산 항목
        groups: 묶음별 제목(title)과 항목(rows). total: true 이면 굵은 빨간 글씨로 표시합니다.
-       나중에 금액을 공개하려면 항목에 amount: 숫자 를 추가하면 "0,000원" 으로 표시됩니다. */
+       금액은 amount: 숫자 → "0,000원", 아직 모를 때는 status: "집계중" 처럼 문구를 적습니다. */
     groups: [
       { title: "수입", rows: [
         { label: "물품지원금(운영위원장협의회)", amount: 500000 },
         { label: "물품지원금(학부모회장협의회)", amount: 500000 },
-        { label: "총수입(티켓판매, 후원금)" },
-        { label: "총수입", total: true }
+        { label: "총수입(티켓판매, 후원금)", status: "집계중" },
+        { label: "총수입", total: true, status: "집계중" }
       ]},
       { title: "지출", rows: [
-        { label: "홍보비" },
-        { label: "운영비" },
-        { label: "물품대금" },
-        { label: "부식비 및 잡비" },
-        { label: "총지출", total: true }
+        { label: "홍보비", status: "집계중" },
+        { label: "운영비", status: "집계중" },
+        { label: "물품대금", status: "집계중" },
+        { label: "부식비 및 잡비", status: "집계중" },
+        { label: "총지출", total: true, status: "집계중" }
       ]},
       { title: "잔액", rows: [
         { label: "하루찻집총수입" },
