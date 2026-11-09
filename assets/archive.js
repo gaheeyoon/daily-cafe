@@ -13,7 +13,7 @@
   function count(n){ root.appendChild(el('div','count','총 ' + n + '개')); }
 
   /* ── 라이트박스 ── */
-  var lb, lbImg, lbCap, stage, items = [], idx = 0;
+  var lb, lbImg, lbCap, lbDl, stage, items = [], idx = 0, canDl = false;
   function buildLB(){
     lb = el('div','lb'); lb.setAttribute('role','dialog'); lb.setAttribute('aria-modal','true');
     stage = el('div','stage'); lbImg = el('img'); stage.appendChild(lbImg); lbCap = el('div','cap');
@@ -24,7 +24,8 @@
     x.onclick = close; p.onclick = function(e){ e.stopPropagation(); go(-1); };
     n.onclick = function(e){ e.stopPropagation(); go(1); };
     lb.onclick = function(e){ if (e.target === lb) close(); };
-    [stage,lbCap,x,p,n].forEach(function(c){ lb.appendChild(c); });
+    lbDl = el('a','dl','⬇ 사진 내려받기'); lbDl.setAttribute('download',''); lbDl.onclick = function(e){ e.stopPropagation(); };
+    [stage,lbCap,lbDl,x,p,n].forEach(function(c){ lb.appendChild(c); });
     document.body.appendChild(lb);
     document.addEventListener('keydown', function(e){
       if (!lb.classList.contains('on')) return;
@@ -40,8 +41,11 @@
       if (!stage.classList.contains('zoom') && Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
     });
   }
-  function show(){ stage.classList.remove('zoom'); lbImg.src = items[idx].src; lbImg.alt = items[idx].caption || ''; lbCap.textContent = (items[idx].caption ? items[idx].caption + '  ' : '') + (items.length > 1 ? (idx+1) + ' / ' + items.length : '') + '  ·  사진을 누르면 확대'; }
-  function open(list, i){ items = list; idx = i; if (!lb) buildLB(); show(); lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
+  function show(){ stage.classList.remove('zoom'); lbImg.src = items[idx].src; lbImg.alt = items[idx].caption || ''; lbCap.textContent = (items[idx].caption ? items[idx].caption + '  ' : '') + (items.length > 1 ? (idx+1) + ' / ' + items.length : '') + '  ·  사진을 누르면 확대';
+    lbDl.hidden = !canDl;
+    if (canDl){ lbDl.href = items[idx].src; lbDl.setAttribute('download', decodeURIComponent(items[idx].src.split('/').pop())); }
+  }
+  function open(list, i, opts){ items = list; idx = i; canDl = !!(opts && opts.download); if (!lb) buildLB(); show(); lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
   function close(){ lb.classList.remove('on'); document.body.style.overflow = ''; }
   function go(d){ idx = (idx + d + items.length) % items.length; show(); }
 
@@ -130,7 +134,7 @@
         var b = el('button','polaroid'); b.type = 'button'; b.setAttribute('aria-label','포토월 사진 ' + (i+1) + ' 크게 보기');
         var im = el('img'); im.src = p.src; im.alt = '포토월 사진 ' + (i+1); im.loading = 'lazy'; im.decoding = 'async';
         b.appendChild(im);
-        b.onclick = function(){ open(list, i); };
+        b.onclick = function(){ open(list, i, { download: true }); };
         wall.appendChild(b);
       });
       return wall;
@@ -143,7 +147,7 @@
       list.forEach(function(p,i){
         var b = el('button'); b.type = 'button'; b.setAttribute('aria-label','사진 ' + (i+1) + ' 크게 보기');
         var im = el('img'); im.src = p.src; im.alt = '행사 사진 ' + (i+1); im.loading = 'lazy'; im.decoding = 'async';
-        b.appendChild(im); b.onclick = function(){ open(list, i); };
+        b.appendChild(im); b.onclick = function(){ open(list, i, { download: true }); };
         g.appendChild(b);
       });
       return g;
