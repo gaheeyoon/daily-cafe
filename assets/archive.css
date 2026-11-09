@@ -83,9 +83,9 @@ main{padding:26px 22px 40px;flex:1;}
 .lb .stage.zoom img{max-width:none;max-height:none;width:260%;cursor:zoom-out;}
 .lb .cap{margin-top:14px;color:#eee;font-size:14px;text-align:center;min-height:1.6em;}
 .lb button{position:absolute;background:none;border:0;color:#fff;font-size:30px;cursor:pointer;padding:12px 16px;line-height:1;}
-.lb .dl{margin-top:6px;padding:10px 20px;border:1px solid rgba(255,255,255,.55);border-radius:999px;color:#fff;font-size:14px;font-weight:700;letter-spacing:-.01em;text-decoration:none;background:rgba(255,255,255,.08);}
+.lb .dl{position:absolute;top:max(10px,env(safe-area-inset-top));left:8px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.62);text-decoration:none;border-radius:50%;}
 .lb .dl[hidden]{display:none;}
-.lb .dl:active{background:rgba(255,255,255,.2);}
+.lb .dl:hover,.lb .dl:active{color:#fff;background:rgba(255,255,255,.14);}
 .lb .x{top:max(10px,env(safe-area-inset-top));right:6px;}
 .lb .prev{left:0;top:50%;transform:translateY(-50%);}
 .lb .next{right:0;top:50%;transform:translateY(-50%);}
