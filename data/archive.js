@@ -38,8 +38,8 @@ window.ARCHIVE = {
        금액은 amount: 숫자 → "0,000원", 아직 모를 때는 status: "집계중" 처럼 문구를 적습니다. */
     groups: [
       { title: "수입", rows: [
-        { label: "물품지원금(운영위원장협의회)", amount: 500000 },
-        { label: "물품지원금(학부모회장협의회)", amount: 500000 },
+        { label: "운영위원장협의회 (지원금)", status: "결산중" },
+        { label: "학부모회장협의회 (지원금)", status: "결산중" },
         { label: "총수입(티켓판매, 후원금)", status: "집계중" },
         { label: "총수입", total: true, status: "집계중" }
       ]},
