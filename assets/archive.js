@@ -24,7 +24,8 @@
     x.onclick = close; p.onclick = function(e){ e.stopPropagation(); go(-1); };
     n.onclick = function(e){ e.stopPropagation(); go(1); };
     lb.onclick = function(e){ if (e.target === lb) close(); };
-    lbDl = el('a','dl','⬇ 사진 내려받기'); lbDl.setAttribute('download',''); lbDl.onclick = function(e){ e.stopPropagation(); };
+    lbDl = el('a','dl'); lbDl.setAttribute('download',''); lbDl.setAttribute('aria-label','사진 내려받기'); lbDl.title = '사진 내려받기';
+    lbDl.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 11l5 5 5-5"/><path d="M5 20h14"/></svg>'; lbDl.onclick = function(e){ e.stopPropagation(); };
     [stage,lbCap,lbDl,x,p,n].forEach(function(c){ lb.appendChild(c); });
     document.body.appendChild(lb);
     document.addEventListener('keydown', function(e){
