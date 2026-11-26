@@ -72,13 +72,13 @@ window.ARCHIVE = {
       { goods: "고구마(하)5kg", qty: 15, donor: "박지혜" },
       { goods: "고구마(혼합)3kg", qty: 10, donor: "윤가희" },
       { goods: "립스틱(3개set)", qty: 30, unit: "세트", donor: "김민경" },
-      { goods: "유기농 쨈", qty: 12, donor: "" },
-      { goods: "비건치약", qty: 20, donor: "" },
+      { goods: "유기농 쨈", qty: 12, donor: "김민경" },
+      { goods: "비건치약", qty: 20, donor: "김민경" },
       { goods: "새치커버스틱", qty: 10, donor: "이가영" },
       { goods: "건강즙 4종", qty: 30, donor: "유명근" },
       { goods: "마스크팩", qty: 50, donor: "김천호" },
-      { goods: "비맥스(영양제)", qty: 30, donor: "" },
-      { goods: "리시브(영양제)", qty: 34, donor: "" },
+      { goods: "비맥스(영양제)", qty: 30, donor: "김천호" },
+      { goods: "리시브(영양제)", qty: 34, donor: "김천호" },
       { goods: "자담치킨외식상품권", qty: 4, donor: "임환·국은희" },
       { goods: "장아찌, 묵은지", qty: 19, donor: "오진아" }
     ]
