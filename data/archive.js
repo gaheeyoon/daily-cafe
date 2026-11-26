@@ -33,31 +33,32 @@ window.ARCHIVE = {
   /* 결산 — 후원 물품 (금액은 표시하지 않습니다)
      goods: 품목 / qty: 개수 (숫자, 모르면 null) / unit: 단위 (생략하면 "개") / donor: 후원자 (없으면 "") */
   summary: {
-    /* 결산 항목
+    /* 결산 항목 (2026년 결산보고서 기준)
        groups: 묶음별 제목(title)과 항목(rows). total: true 이면 굵은 빨간 글씨로 표시합니다.
        금액은 amount: 숫자 → "0,000원", 아직 모를 때는 status: "집계중" 처럼 문구를 적습니다. */
     groups: [
       { title: "수입", rows: [
-        { label: "운영위원장협의회 (지원금)", status: "결산중" },
-        { label: "학부모회장협의회 (지원금)", status: "결산중" },
-        { label: "총수입(티켓판매, 후원금)", status: "집계중" },
-        { label: "총수입", total: true, status: "집계중" }
+        { label: "운영위원장협의회 (지원금)", amount: 500000 },
+        { label: "학부모회장협의회 (지원금)", amount: 500000 },
+        { label: "전년도 이월금 (지원금)", amount: 1500000 },
+        { label: "총수입(티켓판매, 후원금, 현금, 계좌이체)", amount: 16706115 },
+        { label: "총수입", total: true, amount: 19206115 }
       ]},
       { title: "지출", rows: [
-        { label: "홍보비", status: "집계중" },
-        { label: "운영비", status: "집계중" },
-        { label: "물품대금", status: "집계중" },
-        { label: "부식비 및 잡비", status: "집계중" },
-        { label: "총지출", total: true, status: "집계중" }
+        { label: "홍보비", amount: 589110 },
+        { label: "운영비", amount: 660000 },
+        { label: "물품대금", amount: 1103000 },
+        { label: "부식비 및 잡비", amount: 2543360 },
+        { label: "총지출", total: true, amount: 4895470 }
       ]},
       { title: "잔액", rows: [
-        { label: "하루찻집총수입" },
-        { label: "하루찻집잔액", total: true }
+        { label: "하루찻집총수입", amount: 19206115 },
+        { label: "하루찻집잔액", total: true, amount: 14310645 }
       ]},
       { title: "장학금", rows: [
-        { label: "2026년 졸업생 장학금" },
-        { label: "태안사랑장학회 장학금" },
-        { label: "장학금 지출 후 잔액", total: true }
+        { label: "2026년 유치원, 초/중/고 장학금 지급", amount: 10800000 },
+        { label: "태안사랑장학회 장학금 기금", amount: 2000000 },
+        { label: "2027년 물품지원금으로 이월", total: true, amount: 1510645 }
       ]}
     ],
     note: "수익금 전액은 태안군청소년 장학기금으로 전달됩니다.",
